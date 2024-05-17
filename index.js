@@ -1,11 +1,10 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
+const { createServer } = require('http');
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+const server = createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'Hello, world!' }));
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+module.exports = (req, res) => {
+    server.emit('request', req, res);
+};
